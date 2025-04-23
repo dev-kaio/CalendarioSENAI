@@ -121,6 +121,34 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     else if (currentPage.includes("home.html")) {
         loadTabelaAndamento();
+        let intervalId;
+        let rodando = true;
+
+        function alterarTabelas() {
+            const tAndamento = document.getElementById("t-andamento");
+            const tIniciar = document.getElementById("t-iniciar");
+
+            if (tAndamento.style.display === "none") {
+                tAndamento.style.display = "flex";
+                tIniciar.style.display = "none";
+            } else {
+                tAndamento.style.display = "none";
+                tIniciar.style.display = "flex";
+            }
+        }
+
+        intervalId = setInterval(alterarTabelas, 3000);
+
+        document.getElementById("alterar-btn").addEventListener("click", () => {
+            if (rodando) {
+                clearInterval(intervalId);
+                document.getElementById("alterar-btn").textContent = "Retomar";
+            } else {
+                intervalId = setInterval(alterarTabelas, 3000);
+                document.getElementById("alterar-btn").textContent = "Pausar";
+            }
+            rodando = !rodando;
+        });
     }
     else if (currentPage.includes("iniciar.html")) {
         loadTabelaAndamento();
