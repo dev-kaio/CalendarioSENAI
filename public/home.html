@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="/style.css">
-    <meta http-equiv="refresh" content="15">
     <title>Convidado</title>
 </head>
 
@@ -15,10 +14,12 @@
         <img src="/images/senai.png" alt="logo SENAI" class="logo-senai">
         <nav>
             <button type="button"><a href="/index.html" style="text-decoration: none; color: white;">Voltar</a></button>
+            <button type="button" id="alterar-btn">Pausar</button>
         </nav>
     </header>
 
     <section id="meio">
+        <div id="t-andamento">
             <h1>CURSOS EM ANDAMENTO</h1>
             <table id="tabelaAndamento">
                 <thead>
@@ -33,7 +34,9 @@
                 <tbody>
                 </tbody>
             </table>
-            <br><br><br>
+        </div>
+        <br><br><br>
+        <div id="t-iniciar">
             <h1>CURSOS PARA INICIAR</h1>
             <table id="tabelaIniciar">
                 <thead>
@@ -45,6 +48,7 @@
                 <tbody>
                 </tbody>
             </table>
+        </div>
     </section>
     <footer>
         <p>© 2025 - Desenvolvido por Kaio Manfro da Silva</p>
