@@ -86,12 +86,10 @@ table th {
 tbody td {
     border-bottom: 2px solid #000000;
     font-size: 1.6em;
-    /* Linha horizontal entre os <td> */
 }
 
 thead {
     background-color: #c7c5c5;
-    /* Cor de fundo opcional para destacar o cabeçalho */
 }
 
 
@@ -282,6 +280,33 @@ button.excel img.excel-img {
         font-size: 1rem;
         padding: 10px;
     }
+}
+
+#t-andamento {
+    font-size: x-large;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#t-andamento td{
+    padding: 30px;
+}
+
+#t-iniciar {
+    font-size: x-large;
+    width: 100vw;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10%;
+}
+
+#t-iniciar td{
+    padding: 30px;
 }
 
 @media (max-width: 480px) {
