@@ -15,12 +15,14 @@
         <nav>
             <button type="button"><a href="/index.html" style="text-decoration: none; color: white;">Voltar</a></button>
             <button type="button" id="alterar-btn">Pausar</button>
+            <button class="pdf-btn" onclick="baixarPDF()" type="button"><img class="pdf-img" src="/images/pdf.png" alt="pdf-simbolo">Baixar</button>
+
         </nav>
     </header>
 
     <section id="meio">
         <div id="t-andamento">
-            <h1>CURSOS EM ANDAMENTO</h1>
+            <h1 style="margin: 100px;">CURSOS EM ANDAMENTO</h1>
             <table id="tabelaAndamento">
                 <thead>
                     <tr>
@@ -37,7 +39,7 @@
         </div>
         <br><br><br>
         <div id="t-iniciar">
-            <h1>CURSOS PARA INICIAR</h1>
+            <h1 style="margin: 100px;">CURSOS PARA INICIAR</h1>
             <table id="tabelaIniciar">
                 <thead>
                     <tr>
@@ -54,6 +56,62 @@
         <p>© 2025 - Desenvolvido por Kaio Manfro da Silva</p>
     </footer>
 </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+    async function baixarPDF() {
+        const { jsPDF } = window.jspdf;
+        const tabela1 = document.getElementById("t-andamento")
+        const tabela2 = document.getElementById("t-iniciar")
+        let tabela;
+
+        if (tabela1.style.display !== "none") {
+            tabela = tabela1;
+        }
+        else if (tabela2.style.display !== "none") {
+            tabela = tabela2;
+        }
+        else {
+            alert("Nenhuma tabela visível para exportar");
+            return;
+        }
+
+        console.log(tabela)
+
+        const originalOverflow = tabela.style.overflow;
+        const originalHeight = tabela.style.maxHeight;
+
+        tabela.style.overflow = "visible";
+        tabela.style.maxHeight = "none";
+
+        await new Promise(resolve => setTimeout(resolve, 200));
+
+        const canvas = await html2canvas(tabela, {
+            scale: 2,
+            useCORS: true
+        });
+
+        tabela.style.overflow = originalOverflow;
+        tabela.style.maxHeight = originalHeight;
+
+        const imgData = canvas.toDataURL("image/jpeg", 1.0);
+        const pdf = new jsPDF('landscape', 'mm', 'a4');
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const pageHeight = pdf.internal.pageSize.getHeight();
+
+        const imgProps = pdf.getImageProperties(imgData);
+        const imgWidth = pageWidth;
+        const imgHeight = (imgProps.height * imgWidth) / imgProps.width;
+
+        // Se a imagem for mais baixa que a página, centraliza verticalmente
+        const yOffset = (pageHeight - imgHeight) / 2;
+
+        pdf.addImage(imgData, 'JPEG', 0, yOffset, pageWidth, imgHeight);
+        pdf.save("tabela.pdf");
+
+    }
+</script>
+
 <script type="module" src="/js/principal.js"></script>
 
 </html>
