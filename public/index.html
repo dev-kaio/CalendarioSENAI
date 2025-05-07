@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/style.css">
+    <title>Login</title>
+</head>
+
+<body>
+    <header>
+        <img src="/images/senai.png" alt="logo SENAI" class="logo-senai">
+    </header>
+
+    <section id="meio">
+        <form id="loginForm">
+            <label>Email</label>
+            <br>
+            <input required type="email" id="user" title="Por favor, insira apenas letras">
+            <br><br>
+            <label>Senha</label>
+            <br>
+            <input required type="password" id="senha">
+            <br>
+            <br>
+            <button type="submit">Entrar</button>
+            <br>
+            <br>
+            <button type="button"><a href="/home.html" style="text-decoration: none; color: white;">Entrar como
+                    convidado</a></button>
+            <p id="resultado" style="text-align: center; margin-top: 5%;"></p>
+        </form>
+    </section>
+    <footer>
+        <p>© 2025 - Desenvolvido por Kaio Manfro da Silva</p>
+    </footer>
+</body>
+<script src="/js/login.js" type="module"></script>
+
+</html>

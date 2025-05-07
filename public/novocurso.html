@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/style.css">
+    <title>Novo Item</title>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <img src="/images/senai.png" alt="logo SENAI" class="logo-senai">
+        </nav>
+    </header>
+
+    <section id="meio">
+        <form id="formItem">
+            <label>Curso
+                <input required type="text" pattern="[A-Za-zÀ-ÿ\s]+" id="curso">
+            </label>
+            <br>
+            <label>Data Início
+                <input required type="date" pattern="[A-Za-zÀ-ÿ\s]+" id="dataInicio">
+            </label>
+            <br>
+            <label>Data Fim
+                <input required type="date" pattern="[A-Za-zÀ-ÿ\s]+" id="dataFim">
+            </label>
+            <br>
+            <label>Professor(a)
+                <input required type="text" pattern="[A-Za-zÀ-ÿ\s]+" id="professor">
+            </label>
+            <br>
+            <label>Sala
+                <input required type="text" pattern="[A-Za-zÀ-ÿ0-9\s]+" id="sala" placeholder="Ex: Informática 1">
+            </label>
+            <br>
+            <button type="submit">Salvar</button>
+            <button type="button"><a href="/views/admin.html"
+                    style="text-decoration: none; color: white;">Cancelar</a></button>
+        </form>
+    </section>
+    <footer>
+        <p>© 2025 - Desenvolvido por Kaio Manfro da Silva</p>
+    </footer>
+    <script src="/js/principal.js" type="module"></script>
+</body>
+
+</html>

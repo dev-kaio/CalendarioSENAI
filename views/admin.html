@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/style.css">
+    <title>Administrador</title>
+</head>
+
+<body>
+    <header>
+        <img src="/images/senai.png" alt="logo SENAI" class="logo-senai">
+        <nav>
+            <button type="button" id="sair">Sair</button>
+        </nav>
+    </header>
+
+    <section id="meio">
+        <button type="button" style=" width: 20%;margin-bottom: 2%;"><a href="/novocurso.html" style="margin-top: 3%;">Adicionar Novo Curso</a></button>
+        <button onclick="gerarPDF()">Salvar em PDF</button>
+        <h1>CURSOS EM ANDAMENTO</h1>
+        <button class="excel" onclick="exportarExcel('tabelaAndamento')"><img class="excel-img" src="/images/excel.png"
+                alt="excel">Baixar Tabela Andamento</button>
+        <table id="tabelaAndamento">
+            <thead>
+                <tr>
+                    <th>CURSO</th>
+                    <th>DATA INÍCIO</th>
+                    <th>DATA FIM</th>
+                    <th>PROFESSOR(A)</th>
+                    <th>SALA</th>
+                    <th>OPÇÕES</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <br><br><br>
+        <h1 style="margin-top: 2%;">CURSOS PARA INICIAR</h1>
+        <button class="excel" onclick="exportarExcel('tabelaIniciar')"><img class="excel-img" src="/images/excel.png"
+                alt="excel">Baixar Tabela Iniciar</button>
+        <table id="tabelaIniciar">
+            <thead>
+                <tr>
+                    <th>CURSO</th>
+                    <th>DATA INÍCIO</th>
+                    <th>OPÇÕES</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <button class="excel" onclick="exportarTabelas()"><img class="excel-img" src="/images/excel.png"
+                alt="excel">Baixar Ambas Tabelas</button>
+    </section>
+    <div id="modalEditar" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h1>Editar Curso</h1>
+            <form id="formEditar">
+                <input type="hidden" id="editId" />
+                <label>
+                    Curso:
+                    <input type="text" id="editCurso" required pattern="[A-Za-zÀ-ÿ\s]+" />
+                </label>
+                <label>
+                    Data Início:
+                    <input type="date" id="editDataInicio" required pattern="[A-Za-zÀ-ÿ\s]+" />
+                </label>
+                <label>
+                    Data Fim:
+                    <input type="date" id="editDataFim" required pattern="[A-Za-zÀ-ÿ\s]+" />
+                </label>
+                <label>
+                    Professor:
+                    <input type="text" id="editProfessor" pattern="[A-Za-zÀ-ÿ\s]+" />
+                </label>
+                <label>
+                    Sala:
+                    <input type="text" id="editSala" pattern="[A-Za-zÀ-ÿ0-9\s]+" />
+                </label>
+                <button type="submit">Salvar</button>
+                <button type="button" onclick="fecharModal()">Cancelar</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 - Desenvolvido por Kaio Manfro da Silva</p>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script>
+        async function gerarPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    const tabelas = ['tabelaAndamento', 'tabelaIniciar'];
+
+    // Adiciona classe ao body para ativar estilo exclusivo do PDF
+    document.body.classList.add('pdf-export');
+
+    // Adiciona classe de espaçamento às tabelas
+    tabelas.forEach(id => {
+        document.getElementById(id).classList.add('pdf-row-spacing');
+    });
+
+    // Esconde coluna "OPÇÕES"
+    const colunasOpcoes = document.querySelectorAll('th:nth-child(6), td:nth-child(6), th:nth-child(3), td:nth-child(3)');
+    colunasOpcoes.forEach(el => el.classList.add('ocultar-no-pdf'));
+
+    let y = 10;
+
+    for (const id of tabelas) {
+        const tabela = document.getElementById(id);
+        const canvas = await html2canvas(tabela, { scale: 2 });
+        const imgData = canvas.toDataURL('image/png');
+
+        const pageWidth = doc.internal.pageSize.getWidth();
+        const imgProps = doc.getImageProperties(imgData);
+        const imgHeight = (imgProps.height * pageWidth) / imgProps.width;
+
+        if (y + imgHeight > doc.internal.pageSize.getHeight()) {
+            doc.addPage();
+            y = 10;
+        }
+
+        doc.addImage(imgData, 'PNG', 10, y, pageWidth - 20, imgHeight);
+        y += imgHeight + 10;
+    }
+
+    // Remove estilos temporários
+    document.body.classList.remove('pdf-export');
+    tabelas.forEach(id => {
+        document.getElementById(id).classList.remove('pdf-row-spacing');
+    });
+    colunasOpcoes.forEach(el => el.classList.remove('ocultar-no-pdf'));
+
+    doc.save("cursos.pdf");
+}
+</script>
+    
+
+    <style>
+        .ocultar-no-pdf {
+            display: none !important;
+        }
+
+        .pdf-export .pdf-row-spacing td {
+            padding-top: 30px;
+            padding-bottom: 30px;
+}
+    </style>
+    
+
+    <script src="/js/principal.js" defer></script>
+</body>
+
+</html>
