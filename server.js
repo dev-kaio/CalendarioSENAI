@@ -40,7 +40,7 @@ app.use('/views', checkAuth, (req, res, next) => {
 
 app.use('/views', express.static(path.join(__dirname, 'views')));
 
-// Middleware para verificar se o usuário está autenticado
+// verificar se o usuário está autenticado
 app.get('/views/admin.html', checkAuth, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'views', 'admin.html'));
 });
